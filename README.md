@@ -8,22 +8,16 @@ Built as a real-world testbed for the modern-AI architectural patterns I find mo
 
 ## What's in it
 
-- **Multi-timeframe encoder (PyTorch).** Per-timeframe Conv1D branches (1D-CNN) → projection → fused shared latent. Wall-clock-aligned tensor construction across 5m / 10m / 30m / 1h streams with NaN-safe early-session windows.
+- **Multi-timeframe encoder (PyTorch).** Per-timeframe Conv1D branches (1D-CNN) → projection → fused shared latent. Wall-clock-aligned tensor construction across TF streams with NaN-safe early-session windows.
 - **Self-supervised pretrain.** TS2Vec-style contrastive objective (InfoNCE) on raw bar tensors — learns time-series representations without labels.
 - **Weak supervision.** Classification heads trained against forward-looking outcomes (no human labels). Triple-barrier-style label construction.
 - **Sequential head.** Transformer over encoder summaries for sequence-level prediction.
 - **Calibration.** Probability-output calibration with a hand-computed unit-test discipline per metric (every new metric ships with a precondition docstring + hand-verified test).
 - **Lean parameter budget.** Models target 30–42K parameters for CPU-only inference. Architecture choices driven by inference-cost constraints, not parameter-count vanity.
 
-## Engineering discipline
-
-- **Multi-agent workflow.** Adversarial validation pattern: Claude proposes designs, Codex reviews them at multiple reasoning levels, tests are the final authority. Documented in `AGENT-WORKFLOW.md` (private repo).
-- **Reproducible runs.** Every run pinned to a manifest file (data backend, window, model hash, code git SHA).
-- **Diagrammed system.** Architecture, decision rules, and learning dynamics live as SVG-heavy HTML documents under `docs/` (private repo) — design discipline carried over from prior optical-systems work.
-
 ## Stack
 
-`PyTorch · NumPy · Pandas · pandas-market-calendars · pandas-ta` · multi-backend data abstraction (Polygon, Alpaca, yfinance) · GPU + CPU paths.
+`PyTorch · NumPy · Pandas · pandas-market-calendars · pandas-ta` · multi-backend data abstraction · GPU + CPU paths.
 
 ## Status
 
